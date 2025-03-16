@@ -1,6 +1,5 @@
 db.sqlite3
 migrations
-media
 __pycache__/
 .vscode/
 .venv/

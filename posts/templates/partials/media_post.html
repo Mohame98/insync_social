@@ -2,12 +2,12 @@
 <div class="media">
     {% if post.first_media.is_video %}
     <video controls class="media-content">
-        <source src="{{ post.first_media.media.url }}" type="video/mp4" />
+        <source src="{{ MEDIA_URL }}{{ post.first_media.media.url }}" type="video/mp4" />
     </video>
     {% else %}
     <div
         class="media-content"
-        style="background-image: url('{{ post.first_media.media.url }}');">
+        style="background-image: url('{{ MEDIA_URL }}{{ post.first_media.media.url }}');">
     </div>
     {% endif %}
 </div>
