@@ -14,7 +14,7 @@ from itertools import chain
 
 
 def home(request):
-    post = Post.objects.all()
+    post = Post.objects.all().order_by('-created_at')
     posts = paginate(request, post)
     context = { "posts": posts }
     return render(request, "posts/home.html", context)
