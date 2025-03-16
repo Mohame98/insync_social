@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'posts.middleware.RateLimitMiddleware',
+    'posts.middleware.QueryLimitMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -144,18 +145,36 @@ X_FRAME_OPTIONS = 'DENY'
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': False,  # Don't disable existing loggers
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
         },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': '/path/to/your/django.log',  # Use an appropriate path
+            'formatter': 'verbose'
+        }
     },
     'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+        'django.db.backends': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',  # Change to WARNING once identified problematic queries
+            'propagate': False,
+        },
+        'memory.usage': {  # Custom logger for memory tracking
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }
