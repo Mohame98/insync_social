@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block 'title' %}{% endblock %}</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+    <script type="module" src="{% static 'js/app.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" 
+    />
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a class="logo" href="{% url 'posts:home' %}">
+                <h3>inSync</h3>
+            </a>
+            {% if request.path != '/account/login/' and request.path != '/account/signup/' %}
+            {% include "partials/main_search.html" %}
+            <div class="search-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            {% endif %}
+            <div class="holder">
+                <nav>
+                    <ul class="home-icon"> 
+                        <li><a href="{% url 'posts:home' %}">Home</a></li>
+                    </ul>
+                </nav>
+                {% if request.user.is_authenticated %}
+                <ul class="profile">
+                    <li class="create-post">
+                        <a class="btn-yellow" href="{% url 'posts:create_post' %}">Post
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="profile-acc" href="{% url 'account:update_profile'%}">
+                            {% include "acc_partials/profile_image.html" %}
+                        </a>
+                    </li>
+                </ul>
+                {% else %}   
+                <ul class="logs">
+                    <li><a href="{% url 'account:signup' %}">Signup</a></li>
+                    <span>/</span>
+                    <li><a href="{% url 'account:login' %}">Login</a></li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <header class="search-header" style="display: none;">
+        <div class="container">
+            <div class="back-btn" id="back-btn">Back</div>
+            {% if request.path != '/account/login/' and request.path != '/account/signup/' %}
+            {% include "partials/main_search.html" %}
+            {% endif %}
+        </div>
+    </header>
+
+    <main>{% block 'main' %}{% endblock %}</main>
+
+    <footer>
+        inSync 2025. All rights reserved
+    </footer>
+    <script>
+        tinymce.init({
+        selector: '#id_content',
+        license_key: 'gpl',
+        plugins: 'lists',
+        toolbar: 'bold italic underline | alignleft aligncenter alignright | bullist numlist',  
+        menubar: false,
+        content_css: '{% static "css/app.css" %}',
+        drag_drop_upload: false, 
+        paste_data_images: false,
+    });
+    </script>
+</body>
+</html>

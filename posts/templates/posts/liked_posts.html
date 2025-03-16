@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+{% block 'title' %} Liked Posts {% endblock %} 
+{% block 'main' %}
+{% include "partials/flash_message.html" %}
+{% include "acc_partials/profile_overview.html" %}
+<section class="overview-posts">
+    <div class="container">
+        <h2>Liked Posts ({{ total_liked_posts }})</h2>
+        <form method="GET" action="{% url 'posts:liked_posts' %}">
+            {% include "partials/sort.html" %}
+        </form>
+    </div>
+</section>
+{% if posts %}
+{% for post in posts %}
+{% include "partials/post_search.html" %}
+{% endfor %}
+{% include "partials/pagination.html" %}
+{% endif %}
+{% endblock %}

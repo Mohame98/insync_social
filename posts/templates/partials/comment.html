@@ -1,0 +1,37 @@
+<div>
+<li id="comment-{{ comment.id }}" class="ea-comment"> 
+    <input type="checkbox" class="toggle-checkbox" id="toggle-comments{{ comment.id }}" style="display: none;">
+    <label for="toggle-comments{{ comment.id }}" class="toggle-btn">
+        <i class="fa-solid fa-square-plus"></i>
+        <i class="fa-solid fa-square-minus"></i>
+    </label> 
+    <div class="comment-container flex"> 
+        <div class="left">
+            <a href="{% url 'account:user_profile' comment.user.username %}">
+                {% include "partials/profile_img.html" with post=comment %}
+            </a>            
+        </div>
+        <div class="right">
+            <div class="comment-head flex">
+                <div class="flex">
+                    <a class="user_profile" href="{% url 'account:user_profile' comment.user.username %}">
+                       <strong>{{ comment.user.username }}</strong>
+                    </a> 
+                    {% load custom_filters %}
+                    <small>{{ comment.created_at|shortened_timesince }} ago</small>
+                </div>
+                {% include "partials/comment_interaction.html" %}
+            </div>
+            <p class="comment-content">{{ comment.text }}</p>
+            {% include "partials/comment_interaction2.html" %}
+        </div>
+    </div>
+    {% if comment.replies.exists %}
+    <ul style="margin-left: 30px;" id="replies-{{ comment.id }}" class="comment-replies">
+    {% for reply in comment.replies.all %}
+        {% include "partials/comment.html" with comment=reply %}
+    {% endfor %}
+    </ul>
+    {% endif %}
+</li>
+</div>

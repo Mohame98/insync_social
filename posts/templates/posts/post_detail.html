@@ -1,0 +1,53 @@
+{% extends 'base.html' %} 
+{% block 'title' %} {{ post.title }} {% endblock %} 
+{% block 'main' %}
+
+<div class="target-container">
+{% include "partials/flash_message.html" %}   
+</div>
+
+<section class="post">
+    <div class="container">
+        <div class="posts">
+            <a 
+                class="back-btn details-page btn-yellow" 
+                href="javascript:history.back()">
+                <i class="fa-regular fa-circle-left"></i> 
+                Back
+            </a>
+            {% include "partials/post.html" %}
+            <hr>
+        </div>
+    </div>
+</section>
+
+<section class="comment-section">
+    <div class="container">
+        <div>
+            <form 
+                method="POST"
+                action="{% url 'posts:create_comment' post.id %}"
+                class="create-comment action-form">
+                {% csrf_token %}
+                <input type="text" name="comment_text" required placeholder="Enter your comment">
+                <button class="blue-btn" type="submit" name="create_comment">comment</button>
+            </form>
+            <form 
+                method="GET" 
+                action="{% url 'posts:post_detail' post.id %}">
+                {% include "partials/detail_sort.html" %}
+            </form>
+            <ul 
+                id="comments-list"
+                data-post-id="{{ post.id }}">
+                {% for comment in comments %}
+                <div>
+                    {% include "partials/comment.html" %}
+                </div>    
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% include "partials/pagination.html" with posts=comments %}
+{% endblock %}

@@ -1,0 +1,23 @@
+<section class="pagination">
+    <div class="container">
+        <span class="step-links">
+            <div>
+                {% if posts.has_previous %}
+                <a class="blue-btn" href="?page=1">&laquo; First</a>
+                <a class="blue-btn" href="?page={{ posts.previous_page_number }}">Previous</a>
+                {% endif %}
+            </div>
+            {% if posts.has_previous or posts.has_next %}
+            <span class="current">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+            </span>
+            {% endif %}
+            <div>
+                {% if posts.has_next %}
+                <a class="blue-btn" href="?page={{ posts.next_page_number }}">Next</a>
+                <a class="blue-btn" href="?page={{ posts.paginator.num_pages }}">Last &raquo;</a>
+                {% endif %}
+            </div>
+        </span>
+    </div>
+</section>

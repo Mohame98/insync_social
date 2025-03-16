@@ -1,0 +1,9 @@
+<h2>Are you sure? all related data to this post will be permanently deleted</h2>
+<p>{{ post.title }}</p>
+<form method="POST"  action="{% url 'posts:delete_post' post_id=post_id %}">
+{% csrf_token %}
+    <div class="btn-container">
+        <a class="cancel-btn" id="close-btn">Cancel</a>
+        <button class="blue-btn" type="submit">Yes, delete it</button>
+    </div>
+</form>

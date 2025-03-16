@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block 'title' %} Sign up {% endblock %}
+{% block 'main' %}
+<section class="signup">
+    <div class="container">
+        <h3 class="title">Create your profile to stay connected, engage with company updates, and collaborate with your colleagues on inSync!</h3>
+        <div class="signup-form">
+            <h2>Signup</h2>
+            <form method="POST"> 
+                {% csrf_token %}
+                {{ form }}  
+                <button class="blue-btn" type="submit">Sign Up</button>
+            </form>
+        </div>
+        <p class="signup-link">Already an inSync user? login <a href="{% url 'account:login' %}">here.</a></p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% if post.user.profile.profile_image %}
+<div
+    class="profile-img"
+    style="background-image: url('{{ post.user.profile.profile_image.url }}');"
+></div>
+{% else %}
+<div class="no-img">
+    <i class="fa-regular fa-user"></i>
+</div>
+{% endif %}

@@ -1,0 +1,5 @@
+<form action="{% url 'posts:search_result' %}" method="GET" class="search-form">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input required type="text" name="query" placeholder="Search Posts, Comments or Tags" value="{{ request.GET.query }}">
+    {% include "partials/sort.html" %}
+</form>

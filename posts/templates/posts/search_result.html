@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block 'title' %}Search Results{% endblock %}
+{% block 'main' %}
+{% include "partials/flash_message.html" %}
+{% load custom_filters %}
+<section>
+    <div class="container">
+        <h2>Total results ({{ total_results }})</h2>  
+    </div>
+</section>
+{% if page %}
+{% for result in page %}
+{% if result|is_post %}
+{% include "partials/post_search.html" with post=result %}
+{% endif %}   
+{% if result|is_comment %}    
+{% include "partials/comment_search.html" with comment=result %}
+{% endif %}
+{% endfor %}
+<section class="pagination">
+    <div class="container">
+                <span class="step-links">
+                    <div>
+                        {% if page.has_previous %}
+                        <a class="blue-btn" href="?query={{ query }}&sort={{ sort_by }}&page=1">&laquo; first</a>
+                        <a class="blue-btn" href="?query={{ query }}&sort={{ sort_by }}&page={{ page.previous_page_number }}">previous</a>
+                    {% endif %}
+                    </div>
+                    
+                    {% if page.has_previous or page.has_next %}
+                    <span class="current">
+                        Page {{ page.number }} of {{ page.paginator.num_pages }}
+                    </span>
+                    {% endif %}
+
+                    <div>
+                        {% if page.has_next %}
+                        <a class="blue-btn" href="?query={{ query }}&sort={{ sort_by }}&page={{ page.next_page_number }}">next</a>
+                        <a class="blue-btn" href="?query={{ query }}&sort={{ sort_by }}&page={{ page.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                    </div>
+                    
+                    
+                </span>
+            </div>
+        </section>
+    {% endif %}
+
+    {% if not page %}
+        <div class="container">
+            <h3>No result for: "{{ query }}"</h3>
+        </div>
+    {% endif %}
+
+{% endblock %}

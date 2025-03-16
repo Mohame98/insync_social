@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block 'title' %} Change Password {% endblock %}
+{% block 'main' %}
+{% include "partials/flash_message.html" %}
+{% include "acc_partials/profile_overview.html" %}
+<section class="change-password">
+    <div class="container">
+        <h2>Change Password</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <div class="btn-container">
+                <button class="blue-btn" type="submit">Change</button>
+                <a class="cancel-btn" href="javascript:history.back()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

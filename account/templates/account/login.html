@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block 'title' %} Login {% endblock %}
+{% block 'main' %}
+{% include "partials/flash_message.html" %}
+<section class="login">
+    <div class="container">
+        <h3 class="title">log in to stay connected and collaborate with your team</h3>
+        <div class="login-form">
+            <h2>login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}  
+                <button class="blue-btn" type="submit">login</button>
+            </form>
+        </div>
+        <p class="login-link">New to inSync? Sign up <a href="{% url 'account:signup' %}">here.</a></p>
+    </div>
+</section>
+{% endblock %}
